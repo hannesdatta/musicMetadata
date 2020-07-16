@@ -163,10 +163,8 @@ classify_labels <- function(labels, concatenated = FALSE) {
   for (lbl in names(label_iter)) {
     obj[, lbl]=as.numeric(0)
 
-      for (l in label_iter[[lbl]]) {
-        obj[grepl(l, obj$label, ignore.case=TRUE), lbl] <- 1
-      }
-
+    searchstring = paste(label_iter[[lbl]], collapse='|')
+    obj[grepl(searchstring, obj$label, ignore.case=TRUE), lbl] <- 1
 
     # remove bmg[ ]rights from sony classification
     if (lbl=='sony') {
@@ -180,4 +178,3 @@ classify_labels <- function(labels, concatenated = FALSE) {
   apply(obj[,-1], 1, function(x) paste0(colnames(obj)[-1][x==1], collapse=','))
 
 }
-

@@ -1,13 +1,13 @@
 Package: musiclabels
-Title: What the Package Does (One Line, Title Case)
+Title: Classify clear-text names of music labels into (major-label) parent labels
 Version: 0.0.0.9000
 Authors@R: 
-    person(given = "First",
-           family = "Last",
+    person(given = "Hannes",
+           family = "Datta",
            role = c("aut", "cre"),
-           email = "first.last@example.com",
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
+           email = "h.datta@tilburguniversity.edu",
+           comment = c(ORCID = "0000-0002-8723-6002"))
+Description: A regular-expression based algorithm to classify clear-text names of music labels into one (or multiple) of their major-label parent labels (Sony, Warner, Universal). Algorithm validated on external training data provided by Chartmetric.com.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true

@@ -4,7 +4,7 @@
 \alias{classify_labels}
 \title{Classify clear-text label name(s) into their parent (major-label) music labels}
 \usage{
-classify_labels(labels, concatenated = F)
+classify_labels(labels, concatenated = FALSE)
 }
 \arguments{
 \item{labels}{A vector of clear-text (character) label names}

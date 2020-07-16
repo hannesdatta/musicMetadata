@@ -156,7 +156,7 @@ label_iter=list(warner=labels_warner, universal=labels_universal, sony=labels_so
 #' classify_labels('Interscope')
 #' classify_labels(c('Republic Records', 'Epic/Legacy', 'WM Finland', 'Chillhop Records'))
 #' classify_labels(c('Republic Records', 'Epic/Legacy', 'WM Finland', 'Chillhop Records'), concatenated=T)
-
+#' @export
 classify_labels <- function(labels, concatenated = FALSE) {
   obj = data.frame(label=labels)
 

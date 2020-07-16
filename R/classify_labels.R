@@ -1,13 +1,4 @@
 
-#' Classify clear-text label name(s) into their parent (major-label) music labels
-#'
-#' @param labels A vector of clear-text (character) label names
-#' @return A vector, returning respective parent (major-label) music labels; NA means unclassified and probably independent label
-#' @examples
-#' classify_labels('Interscope')
-#' classify_labels(c('Republic Records', 'Epic/Legacy', 'WM Finland', 'Chillhop Records'))
-
-
 #labels = read.table('../legacy/labels.csv', header = T, quote="", encoding = "UTF-8", sep="\t")
 #classify_labels(labels$label[1:100])
 
@@ -152,7 +143,21 @@ remove_from_sony = 'BMG[ ]rights'
 
 label_iter=list(warner=labels_warner, universal=labels_universal, sony=labels_sony)
 
-classify_labels <- function(labels) {
+
+
+#' Classify clear-text label name(s) into their parent (major-label) music labels
+#'
+#' @param labels A vector of clear-text (character) label names
+#' @param concatenated Indicator, whether to return only a character vector with final classification (default is FALSE)
+#' @return Either a data frame of the same length as vector and three additional columns (sony, warner, universal), coded as 1 if clear-text label is part of one of the three major music labels, or not (0) (default). If `concatenated=TRUE`,
+#' returns a vector of same length as input vector.
+#'
+#' @examples
+#' classify_labels('Interscope')
+#' classify_labels(c('Republic Records', 'Epic/Legacy', 'WM Finland', 'Chillhop Records'))
+#' classify_labels(c('Republic Records', 'Epic/Legacy', 'WM Finland', 'Chillhop Records'), concatenated=T)
+
+classify_labels <- function(labels, concatenated = FALSE) {
   obj = data.frame(label=labels)
 
   for (lbl in names(label_iter)) {
@@ -170,6 +175,9 @@ classify_labels <- function(labels) {
     }
 
   }
-  return(obj)
+
+  if (concatenated==F) return(obj)
+  apply(obj[,-1], 1, function(x) paste0(colnames(obj)[-1][x==1], collapse=','))
+
 }
 

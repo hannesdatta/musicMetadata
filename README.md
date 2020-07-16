@@ -5,9 +5,7 @@
 
 The goal of `musiclabels` is to classify clear-text label names as frequently encountered in digital music data sets (e.g., "Interscope"), into their parent labels (at this stage, the three major music labels "Universal", "Warner", and "Sony"). All remaining (unclassified) ones are likely independent music labels.
 
-
-Thanks to Robbert Oudelaar (https://tinyurl.com/r36u6ly) for debugging and code improvements, and for Chartmetric (https://chartmetric.com) for providing validation data and feedback.
-
+The classification algorithm relies on a list of regular expressions that identifies each of the three major music labels. The algorithm has been independently developed with an initial list taken from the academic literature. In 2020, the expressions have been updated on the basis of an external data set with label names and their parent-label classifications, as supplied by https://chartmetric.com. 
 
 ## Installation
 
@@ -30,9 +28,13 @@ classify_label('Interscope')
 ## basic example code
 ```
 
-## Contribution
+## Acknowledgements
 
-In the script below, I use a series of regular expressions (for an extensive tutorial, see https://www.hackerearth.com/practice/machine-learning/advanced-techniques/regular-expressions-string-manipulation-r/tutorial/) to identify major labels (versus independent labels in a list of label names (as available on Spotify.
+Thanks to Robbert Oudelaar (https://tinyurl.com/r36u6ly) for debugging and code improvements, and for Chartmetric (https://chartmetric.com) for providing validation data and feedback.
 
-For a guide how to contribiute to this Gist, see http://tilburgsciencehub.com/workflow/collaboration/
+## Contributions
 
+For a general guide on how to contribute to this repository/package, see http://tilburgsciencehub.com/workflow/collaboration/.
+
+Please familiarize yourself with regular expressions in R before making any modifications.
+See ee https://www.hackerearth.com/practice/machine-learning/advanced-techniques/regular-expressions-string-manipulation-r/tutorial/).

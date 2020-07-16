@@ -1,6 +1,7 @@
 Package: musiclabels
-Title: Classify clear-text names of music labels into (major-label) parent labels
+Title: Classify music labels into their (major-label) parent labels
 Version: 0.0.0.9000
+Date: 2020-07-16
 Authors@R: 
     person(given = "Hannes",
            family = "Datta",

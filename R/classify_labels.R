@@ -1,22 +1,16 @@
 
 #' Classify clear-text label name(s) into their parent (major-label) music labels
 #'
-#' @param x A vector of clear-text (character) label names
+#' @param labels A vector of clear-text (character) label names
 #' @return A vector, returning respective parent (major-label) music labels; NA means unclassified and probably independent label
 #' @examples
 #' classify_labels('Interscope')
-#' add(10, 1)
+#' classify_labels(c('Republic Records', 'Epic/Legacy', 'WM Finland', 'Chillhop Records'))
 
 
-# In the script below, I use a series of
-# regular expressions (for an extensive tutorial,
-# see https://www.hackerearth.com/practice/machine-learning/advanced-techniques/regular-expressions-string-manipulation-r/tutorial/)
-# to identify major labels (versus independent
-# labels in a list of label names (as available on
-# Spotify.
+#labels = read.table('../legacy/labels.csv', header = T, quote="", encoding = "UTF-8", sep="\t")
+#classify_labels(labels$label[1:100])
 
-# For a guide how to contribiute to this Gist, see http://tilburgsciencehub.com/workflow/collaboration/
-labels = read.table('labels.csv', header = T, quote="", encoding = "UTF-8", sep="\t")
 
 labels_warner = c('Warner Music' = 'warner[ ]music|warner[ ]records|warner[ ]home|warner[ ]special|warner[ ]strategic|warner[.]esp|Warner[ ][A-Z]',
                   'Asylum Records' = '^asylum$|asylum[/]|[/]asylum|asylum[ ]records|atlantic[ ]records|atlantic[/]|[/][ ]atlantic([|]|$)|atlantic[ ]nashville|atlantic[ ]recording[ ]corporation|[/]atlantic([|]|$)|elektra asylum|([|]|^)atlantic([|]|$)|elektra[ ]records|[/]elektra|elektra[/]|([|]|^)elektra([|]|$)|warner[ ]music[ ]nashville|warner[ ]bros|elektra[ ]nashville',
@@ -154,26 +148,28 @@ labels_sony = c('Columbia Records'='CBS[ ]columbia|([|]|^)columbia|hypnotize[ ]m
                 'polo grounds'='polo grounds',
                 'the[ ]orchard'='the[ ]orchard')
 
+remove_from_sony = 'BMG[ ]rights'
 
 label_iter=list(warner=labels_warner, universal=labels_universal, sony=labels_sony)
 
-labels$label_classified <- ""
+classify_labels <- function(labels) {
+  obj = data.frame(label=labels)
 
   for (lbl in names(label_iter)) {
+    obj[, lbl]=as.numeric(0)
 
-        for (l in label_iter[[lbl]]) {
-      labels[grepl(l, labels$label, ignore.case=TRUE),]$label_classified = lbl
+      for (l in label_iter[[lbl]]) {
+        obj[grepl(l, obj$label, ignore.case=TRUE), lbl] <- 1
+      }
+
+
+    # remove bmg[ ]rights from sony classification
+    if (lbl=='sony') {
+      obj[grepl(remove_from_sony, obj$label, ignore.case=TRUE), lbl] <- 0
+
     }
+
   }
+  return(obj)
+}
 
-# remove bmg[ ]rights from sony classification
-labels <- as.data.table(labels)
-remove_from_sony = 'BMG[ ]rights'
-labels[grepl(remove_from_sony, labels$label, ignore.case=T), label_classified:='']
-
-write.table(labels, "labels-classified_edit.csv", row.names=F, sep='\t')
-
-nrow(labels)
-sum(labels$label_classified=='sony')
-sum(labels$label_classified=='universal')
-sum(labels$label_classified=='warner')

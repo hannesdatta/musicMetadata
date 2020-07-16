@@ -30,3 +30,9 @@ classify_label('Interscope')
 ## basic example code
 ```
 
+## Contribution
+
+In the script below, I use a series of regular expressions (for an extensive tutorial, see https://www.hackerearth.com/practice/machine-learning/advanced-techniques/regular-expressions-string-manipulation-r/tutorial/) to identify major labels (versus independent labels in a list of label names (as available on Spotify.
+
+For a guide how to contribiute to this Gist, see http://tilburgsciencehub.com/workflow/collaboration/
+

@@ -1,14 +1,14 @@
-Package: musiclabels
-Title: Classify music labels into their (major-label) parent labels
-Version: 0.0.0.9000
-Date: 2020-07-16
+Package: musicMetadata
+Title: Work with metadata frequently encountered in music datasets (e.g., classify clear-text names of music labels into (major-label) parent labels)
+Version: 0.0.1.0000
+Date: 2020-07-22
 Authors@R: 
     person(given = "Hannes",
            family = "Datta",
            role = c("aut", "cre"),
            email = "h.datta@tilburguniversity.edu",
            comment = c(ORCID = "0000-0002-8723-6002"))
-Description: A regular-expression based algorithm to classify clear-text names of music labels into one (or multiple) of their major-label parent labels (Sony, Warner, Universal). Algorithm validated on external training data provided by Chartmetric.com.
+Description: Collection of functions to more efficiently deal with metadata frequently encountered in music datasets (e.g., collected by Spotify Web API, Chartmetric, Musicbrainz, Discogs). Currently features a regular-expression based algorithm to classify clear-text names of music labels into one (or multiple) of their major-label parent labels (Sony, Warner, Universal). Algorithm validated on external training data provided by Chartmetric.com.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true

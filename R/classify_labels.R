@@ -1,21 +1,21 @@
-
-#labels = read.table('../legacy/labels.csv', header = T, quote="", encoding = "UTF-8", sep="\t")
-#classify_labels(labels$label[1:100])
-
+#####################################################
+# For each major label, we collect a list of        #
+# regular expressions to identify subsidary labels. #
+#####################################################
 
 labels_warner = c('Warner Music' = 'warner[ ]music|warner[ ]records|warner[ ]home|warner[ ]special|warner[ ]strategic|warner[.]esp|Warner[ ][A-Z]',
-                  'Asylum Records' = '^asylum$|asylum[/]|[/]asylum|asylum[ ]records|atlantic[ ]records|atlantic[/]|[/][ ]atlantic([|]|$)|atlantic[ ]nashville|atlantic[ ]recording[ ]corporation|[/]atlantic([|]|$)|elektra asylum|([|]|^)atlantic([|]|$)|elektra[ ]records|[/]elektra|elektra[/]|([|]|^)elektra([|]|$)|warner[ ]music[ ]nashville|warner[ ]bros|elektra[ ]nashville',
+                  'Asylum Records' = '^asylum$|asylum[/]|[/]asylum|asylum[ ]records|atlantic[ ]records|atlantic[/]|[/][ ]atlantic([|]|$)|atlantic[ ]nashville|atlantic[ ]recording[ ]corporation|[/]atlantic([|]|$)|elektra asylum|([|]|^)atlantic([|]|$)|elektra[ ]records|[/]elektra|elektra[/]|([|]|^)elektra([|]|$)|warner[ ]music[ ]nashville|warner[ ]bros|elektra[ ]nashville|asylum worldwide|[/][ ]asylum',
                   'Big Beats Records' = 'big[ ]beat[ ]|([|]|^)big beat([|]|$)|[/]big beat|big beat[/]|big beat$',
                   'Canvasback Music' = 'canvasback',
-                  'Parlophone Label Group' = 'parlophone|FFR[ ]records|([|]|^)FFRR([|]|$)|virgin[ ]classics|emi[ ]classics|[ ]erato[ ]|([|]|^)erato|warner[ ]classics|([|]|^)erato[ ]|[/]erato|erato[/]',
-                  'Reprise Records' = '([|]|^)reprise[ ]|[/]reprise|reprise[/]',
+                  'Parlophone Label Group' = 'parlophone|FFR[ ]records|([|]|^)FFRR([|]|$)|emi[ ]classics|[ ]erato[ ]|([|]|^)erato|warner[ ]classics|([|]|^)erato[ ]|[/]erato|erato[/]',
+                  'Reprise Records' = '([|]|^)reprise[ ]|[/]reprise|reprise[/]|^reprise',
                   'Fueled By Ramen' = 'Fueled[ ]by[ ]ramen',
                   'Nonesuch Records' = 'nonesuch[ ]records|([|]|^)nonesuch([|]|$)|[/]nonesuch|nonesuch[/]',
                   'Rhino Entertainment' = 'rhino[ ]entertainment|([|]|^)rhino|[/]rhino|rhino[/]',
                   'Roadrunner Records' = '([|]|^)roadrunner|[/]roadrunner|roadrunner[/]',
                   'Sire Records' = '([|]|^)sire[ ]records|([|]|^)sire[ ]|([|]|^)sire[ ]([|]|$)|[/]sire|sire[/]',
                   'East West' = 'east[ ]west|eastwest',
-                  'Warner (all combined)' = '([|]|^)warner|[(]warner[)]|asylum[ ]records|big[ ]beat[ ]records|canvasback[ ]music|parlophone[ ]label[ ]group|reprise[ ]records|fueled[ ]by[ ]ramen|nonesuch[ ]records|rhino[ ]entertainment|roadrunner[ ]records|sire[ ]records|east[ ]west',
+                  'Warner (all combined)' = '([|]|^)warner|[(]warner[)]|asylum[ ]records|big[ ]beat[ ]records|canvasback[ ]music|parlophone[ ]label[ ]group|reprise[ ]records|fueled[ ]by[ ]ramen|nonesuch[ ]records|rhino[ ]entertainment|roadrunner[ ]records|sire[ ]records|east[ ]west|[ ]warner[/]',
                   'WM' = '^WM$|^WM[ ]|[/]wm|WM[/]|[/]WMI|[ ]WMI|WMI[ ]',
                   '300 entertainment' = '300[ ]entertainment|300[ ]produ',
                   '679 recordings' = '679 recordings',
@@ -48,16 +48,16 @@ labels_warner = c('Warner Music' = 'warner[ ]music|warner[ ]records|warner[ ]hom
                   'saddle creek'= 'saddle[ ]creek')
 
 labels_universal = c('Universal Music Group' = '([|]|^)universal|[/]universal|universal[/]|([|]|^)universal[ ]music[ ]japan|([|]|^)universal[ ]sigma|([|]|^)universal[ ]international|([|]|^)geneon[ ]universal|nbcuniversal|universal[ ]licensing[ ]music|([|]|^)universal[ ]music[ ]|universal[ ]music[ ]spain|universal[ ]m..z.k|([|]|^)universal records|([|]|^)universal[ ]records[ ]|([|]|^)universal[ ]republic[ ]records',
-                     'Capitol Music Group' = 'capitol|astralwerks|blue[ ]{0,2}note|deep[ ]{0,2}well|([|]|^)metamorphosis|motown|quality[ ]{0,2}control|([|]|^)virgin[ ]|([|]|^)virgin([|]|$)|[/]virgin|virgin[/]',
+                     'Capitol Music Group' = 'capitol|astralwerks|blue[ ]{0,2}note|deep[ ]{0,2}well|([|]|^)metamorphosis|motown|quality[ ]{0,2}control|([|]|^)virgin[ ]|([|]|^)virgin([|]|$)|[/]virgin|virgin[/]|[/][ ]virgin[ ]',
                      'Decca Classics' = 'decca|ecm([ ]|$|[|])|([|]|^)mercury|([|]|^)mercury[ ]classics|([|]|^)mercury[ ]records|mercury[ ]records',
                      'Def Jam Recordings' = 'def[ ]{0,2}jam|artium|g.o.o.d|([|]|^)good([|]|$)|good[ ]records',
                      'Deutsche Grammophon' = 'deutsche[ ]grammophon|grammophon',
-                     'Eagle Rock Entertainment' = 'eagle[ ]rock|eagle[ ]records',
+                     'Eagle Rock Entertainment' = 'eagle[ ]rock|^eagle[ ]records|[/]eagle[ ]records|[/][ ]eagle records',
                      'EMI' = '^emi[ ]|[ ]emi[ ]|([|]|^)emi[ ]music|[/]emi|emi[/]|[-]emi|([|]|^)emi([|]|$)|[ ]emi([|]|$)',
                      'Interscope' = 'interscope|geffen|A[&]M|([|]|^)222([|]|$)|aftermath$|aftermath[/]|aftermath[ ]music|aftermath[ ]records|darkroom|dreamville|LVRN Records|Mad Love|kidinakorner|shady[ ]{0,2}records',
                      'Island Records' = '([|]|^)island[ ]mercury|([|]|^)island[ ]def[ ]jam|([|]|^)island[ ]records|4th & Broadway|universal[ ]island|([|]|^)island([|]|$)|[/]island|island[/]',
                      'Polydor Records' = '([|]|^)polydor[ ]|([|]|^)polydor[ ]([|]|$)|([|]|^)fiction[ ]records|([|]|^)fiction([|]|$)|polydor',
-                     'Republic Records' = '([|]|^)republic[ ]records|[/]republic|republic[/]|universal[ ]republic|([|]|^)american[ ]recordings|([|]|^)Brushfire[ ]records|casablanca[ ]records|([|]|^)cash[ ]money[ ]records|john[ ]varvatos|([|]|^)lava[ ]records|lightworkers',
+                     'Republic Records' = '^republic[ ]recordings|([|]|^)republic[ ]record|[/]republic|republic[/]|universal[ ]republic|([|]|^)american[ ]recordings|([|]|^)Brushfire[ ]records|casablanca[ ]records|([|]|^)cash[ ]money[ ]records|john[ ]varvatos|([|]|^)lava[ ]records|lightworkers',
                      'Republic Records 2' = '([|]|^)republic[ ]records|([|]|^)american[ ]recordings|([|]|^)Brushfire[ ]records|([|]|^)casablanca[ ]records|([|]|^)cash[ ]money[ ]records|john[ ]varvatos|([|]|^)lava[ ]records|lightworkers',
                      'Universal Music Enterprises' = '([|]|^)universal[ ]|([|]|^)universal([|]|$)|T[-]boy',
                      'Universal Music Group Nashville' = 'capitol[ ]{0,1}records[ ]{0,1}nashville|emi[ ]{0,1}records[ ]{0,1}nashville|mca[ ]{0,1}nashville|mercury[ ]{0,1}nashville|show[-]{0,1}dog',
@@ -66,19 +66,19 @@ labels_universal = c('Universal Music Group' = '([|]|^)universal|[/]universal|un
                      'PM:AM Recordings' = 'PM[:]AM|pm[ ]{0,1}am',
                      'Spinefarm Records' = 'spinefarm',
                      'SpinnUp' = 'SpinnUp',
-                     'Disques Barclay' = 'disques[ ]{0,1}barclay|([|]|^)barclay',
+                     'Disques Barclay' = 'disques[ ]{0,1}barclay|([|]|^)barclay|^barclay|[/]barclay',
                      'Varese Sarabande' = 'var.se',
                      'Digital Distribution Trinidad and Tobago' ='Digital Distribution Trinidad and Tobago',
                      'Universal Music (combined)' = 'varese[ ]sarabande|disques[ ]barclay|spinnup|spinefarm[ ]records|pm:am[ ]recordings|verve[ ]label[ ]group|universal[ ]music[ ]latin[ ]entertainment|universal[ ]music[ ]group[ ]nashville|universal[ ]music[ ]enterprises|republic[ ]records|polydor[ ]records|island[ ]records|interscope|eagle[ ]rock[ ]entertainment|deutsche[ ]grammophon|def[ ]jam[ ]recordings|decca[ ]classics|capitol[ ]music[ ]group|universal[ ]music[ ]group',
                      'Abbey Road' = 'abbey[ ]road|bravad',
                      'others' = 'xo records|young money|shady records|spinefarm rec|u[-]live',
-                     'UMe' = '([|]|^)UMe[ ]|Avenue Records/UMe|Alpha Dog 2T/UMe|([|]|^)UMe([|]|$)',
+                     'UMe' = '([|]|^)UMe[ ]|Avenue Records/UMe|Alpha Dog 2T/UMe|([|]|^)UMe([|]|$)|[/]ume$|[/][ ]ume$',
                      'all star records' = 'all[ ]star[ ]records',
                      'cinepoly'= 'cinepoly',
                      'copenhagen records' = 'copenhagen[ ]records',
                      'DEP' = '^dep[ ][/]|^dep[/]|[/]dep([|]|$)|[/][ ]dep',
                      'delicious vinyl' = '^delicious vinyl',
-                     'el cartel' ='^el cartel|[/]el cartel',
+                     'el cartel' ='^el cartel media|^el cartel record|^el cartel music|[/]el cartel|^el cartel$|^el cartel studio',
                      'fontana' = 'fontana north|[/]fontana([|]|$)|[/][ ]fontana([|]|$)|^fontana|umi[ ]fontana',
                      'g-unit' = 'g-unit',
                      'hip-o' = 'hip-o',
@@ -103,46 +103,50 @@ labels_universal = c('Universal Music Group' = '([|]|^)universal|[/]universal|un
                      'universal music'= 'universal[ ]music',
                      'streamline' = 'streamline$|streamline[ ]|streamline[/]',
                      'umg'= '^umg[ ]|[ ]umg[ ]|^umg[/]|[ ]umg[/]|umgi',
-                     'downtown'= 'downtown[ ]music')
+                     'downtown'= 'downtown[ ]music|downtown record',
+                     'angel records' = '^angel records$|angel records canada|angel records international')
 
-labels_sony = c('Columbia Records'='CBS[ ]columbia|([|]|^)columbia|hypnotize[ ]minds|[/]columbia|columbia[/]',
+labels_sony = c('Columbia Records'='CBS[ ]columbia|([|]|^)columbia|hypnotize[ ]minds|[/]columbia|[/]columbia[/]|[/][ ]columbia|columbia[/]',
                 'Columbia Records 2' = 'dreamville[ ]entertainment|small.*giant|startime[ ]international|blue[ ]propaganda',
-                'RCA Records' = '([|]|^)rca|([|]|^)bystorm.*entertainment|([|]|^)nappy[ ]boy|([|]|^)j[ ]records',
+                'RCA Records' = '([|]|^)rca[ ]|([|]|^)bystorm.*entertainment|([|]|^)nappy[ ]boy|([|]|^)j[ ]records',
                 'Epic Records' = '([|]|^)battery[ ]records|([|]|^)freebandz|([|]|^)bad[ ]{0,1}boy[ ]records|([|]|^)volcano|vested[ ]in[ ]culture',
                 'Sony Music Nashville' = 'sony[ ]music|([|]|^)arista|([|]|^)columbia[ ]nashville|rca[ ]records[ ]nashville|[/]sony|sonybmg',
                 'Zomba Music Group' = '([|]|^)zomba|([|]|^)jive[ ]records|([|]|^)verity',
-                'RED Music Distribution' = '([|]|^)red[ ]music[ ]|odd[ ]future|([|]|^)red[ ]ink|cinematic[ ]music|([|]|^)reach[ ]records',
+                'RED Music Distribution' = '([|]|^)red[ ]music[ ]|odd[ ]future|[ ]red ink|^red[ ]ink|[/]red ink|[/][ ]red ink|cinematic[ ]music|([|]|^)reach[ ]records',
                 'Legacy Recordings' = '([|]|^)legacy[ ]recordings|([|]|^)legacy[ ]records|([|]|^)laface',
                 'Sony Music Latin' = 'sony.*latin',
                 'Ariola Records' = 'ariola',
-                'Sony Masterworks' = 'sony[ ]masterworks|([|]|^)bluebird|([|]|^)okeh|portrait[ ]records|([|]|^)portrait|([|]|^)arte[ ]nova|sony[ ]classical|flying[ ]buddha|([|]|^)masterworks',
+                'Sony Masterworks' = 'sony[ ]masterworks|([|]|^)bluebird|rca bluebird$|([|]|^)okeh|portrait[ ]records|([|]|^)portrait|([|]|^)arte[ ]nova|sony[ ]classical|flying[ ]buddha|([|]|^)masterworks',
                 'Provident Label Group' = '([|]|^)provident|essential[ ]records|flicker[ ]records|beach[ ]street|reunion[ ]records|essential[ ]worship',
                 'Century Media Records' = 'century[ ]media|([|]|^)century record|people[ ]like[ ]you|insideout[ ]music|superball[ ]music',
-                'Sony Music Entertainment' = 'Sony[ ]BMG|([|]|^)BMG|columbia[ ]music|sony[ ]music|Columbia[ ]records|RCA[ ]Records|Sony[ ]Music[ ]Nashville|Zomba[ ]Music[ ]Group|RED[ ]Music[ ]Distribution[ ]|Legacy[ ]Recordings|Sony[ ]Music[ ]Latin|Ariola[ ]Records|Sony[ ]Masterworks|Provident[ ]Label[ ]Group|Century[ ]Media[ ]Records',
-                'sony/ATV music publishing' = 'Sony/ATV|Sony ATV',
+                'Sony Music Entertainment' = 'Sony[ ]BMG|([|]|^)BMG|columbia[ ]music|sony[ ]music|Columbia[ ]records|^RCA[ ]Records|[ ]rca[ ]records|[/]RCA[ ]records|[/][ ]RCA[ ]records|Sony[ ]Music[ ]Nashville|Zomba[ ]Music[ ]Group|RED[ ]Music[ ]Distribution[ ]|Legacy[ ]Recordings|Sony[ ]Music[ ]Latin|Ariola[ ]Records|Sony[ ]Masterworks|Provident[ ]Label[ ]Group|Century[ ]Media[ ]Records',
+                'sony/ATV music publishing' = 'Sony/ATV|Sony ATV|atv music publishing|sony interactive|sony dadc|Sony Computer Entertainment|Sony Worldwide|sony entertainment|Sony Operating Thailand|2017 sony|sony beat|sony uk|sony urban|sony publishing|sony benelux|sony entertainment|sony digital publishing|^sony[ ][/]',
                 'Filtr' = '([|]|^)Filtr([|]|$)|([|]|^)Filtr Kids',
                 'Ultra records (llc)' = '([|]|^)Ultra Records|([|]|^)"Ultra Records',
                 'disco:wax' = 'disco:wax',
-                'x nashville' = 'arista nashville|columbia nashville|rca nashville',
+                'x nashville' = 'arista nashville|columbia nashville|[ ]rca nashville',
                 'azteca records' = 'azteca records',
                 'black butter' = 'black butter',
                 'cbs' = 'cbs([ ]|[/])|^cbs([|]|$)',
                 'hub records' = '^hub record',
                 'ministry of sound' = 'ministry of sound',
-                'SME' = '^sme([ ]|[/])|^[(]sme([ ]|[/])|^sme([|]|$)|[/]sme[ ]',
-                'sony interactive entertainment'  = 'sony interactive entertainment',
+                'SME' = '^sme([ ]|[/])|^[(]sme([ ]|[/])|^sme([|]|$)|[/]sme[ ]|sme korea',
+                'sony interactive entertainment'  = 'sony interactive entertainment|Sony Pictures Entertainment|sonyatv|sony record|sony[ ][/][ ]japan|[/][ ]sony|^sony[ ]|^sony[/]|sony japan|Sony Soundtrax',
                 'syco music' =  'syco music',
-                'epic records 2' = '^Epic([|]|$)|^Epic[ ]Records|[/]Epic[ ]Records|epic[/]|[/]epic([|]|$)|^Epic[ ]amsterdam|^Epic[ ]germany|^Epic[ ]istanbul|^Epic[ ]oslo|^Epic[ ]deutschland|[/][ ]Epic([|]|$)|[/][ ]epic[ ]|[/][ ]epic[/]|epic[ ]gothenburg',
-                'wind up'= 'wind-up',
+                'epic records 2' = '^Epic([|]|$)|^Epic[ ]Records|[/]Epic[ ]Records|epic[/]|[/]epic([|]|$)|^Epic[ ]amsterdam|^Epic[ ]germany|^Epic[ ]istanbul|^Epic[ ]oslo|^Epic[ ]deutschland|[/][ ]Epic([|]|$)|[/][ ]epic[ ]|[/][ ]epic[/]|epic[ ]gothenburg|epic north',
+                'wind up'= 'wind-up records|wind-up - concord|^wind-up$',
                 'ki/oon' = 'ki/oon',
                 'metal blade' = 'metal blade',
                 'polo grounds'='polo grounds',
-                'the[ ]orchard'='the[ ]orchard')
+                'the[ ]orchard'='the[ ]orchard',
+                'sony int' = 'sony international',
+                'freebandz' = '^freebandz|[ ]freebandz[ ]')
 
+# All labels with 'bmg rights' are not from sony, so remove those from the classification
 remove_from_sony = 'BMG[ ]rights'
 
+# Combine lists
 label_iter=list(warner=labels_warner, universal=labels_universal, sony=labels_sony)
-
 
 
 #' Classify clear-text label name(s) into their parent (major-label) music labels
@@ -178,3 +182,6 @@ classify_labels <- function(labels, concatenated = FALSE) {
   apply(obj[,-1], 1, function(x) paste0(colnames(obj)[-1][x==1], collapse=','))
 
 }
+
+
+

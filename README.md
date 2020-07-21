@@ -38,7 +38,7 @@ classify_label('Interscope')
 
 ## Acknowledgements
 
-Thanks to Robbert Oudelaar (https://tinyurl.com/r36u6ly) for debugging and code improvements, and for Chartmetric (https://chartmetric.com) for providing validation data and feedback.
+Thanks to [Robbert Oudelaar](https://www.linkedin.com/in/robbert-oudelaar-0b397aa6) for debugging and code improvements, and to [Chartmetric](https://chartmetric.com) for providing validation data and feedback.
 
 ## Contributions
 

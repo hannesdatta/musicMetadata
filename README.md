@@ -3,8 +3,7 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of `musicMetadata` is to ease the processing of metadata frequently encountered in "music" d
-datasets such as those obtained through the Spotify Web API, Chartmetric, Musicbrainz, or Discogs.
+The goal of `musicMetadata` is to ease the processing of metadata frequently encountered in "music" datasets such as those obtained through the Spotify Web API, Chartmetric, Musicbrainz, or Discogs.
 
 ## Features
 

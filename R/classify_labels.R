@@ -157,9 +157,23 @@ label_iter=list(warner=labels_warner, universal=labels_universal, sony=labels_so
 #' returns a vector of same length as input vector.
 #'
 #' @examples
+#'
+#' # Classify one label
 #' classify_labels('Interscope')
+#'
+#' # Classify vector of labels
 #' classify_labels(c('Republic Records', 'Epic/Legacy', 'WM Finland', 'Chillhop Records'))
-#' classify_labels(c('Republic Records', 'Epic/Legacy', 'WM Finland', 'Chillhop Records'), concatenated=T)
+#'
+#' # Classify vector of labels, return one column as a response (`concatenated = TRUE`)
+#' classify_labels(c('Republic Records', 'Epic/Legacy', 'WM Finland', 'Chillhop Records'),
+#'                 concatenated = TRUE)
+#'
+#' # Run classifications on data frame
+#' head(musiclabels)
+#' example_data = musiclabels[1:1000,]
+#' example_data$parent = classify_labels(example_data$label, concatenated = TRUE)
+#' head(example_data, 20)
+#'
 #' @export
 classify_labels <- function(labels, concatenated = FALSE) {
   obj = data.frame(label=labels)

@@ -19,7 +19,21 @@ returns a vector of same length as input vector.
 Classify clear-text label name(s) into their parent (major-label) music labels
 }
 \examples{
+
+# Classify one label
 classify_labels('Interscope')
+
+# Classify vector of labels
 classify_labels(c('Republic Records', 'Epic/Legacy', 'WM Finland', 'Chillhop Records'))
-classify_labels(c('Republic Records', 'Epic/Legacy', 'WM Finland', 'Chillhop Records'), concatenated=T)
+
+# Classify vector of labels, return one column as a response (`concatenated = TRUE`)
+classify_labels(c('Republic Records', 'Epic/Legacy', 'WM Finland', 'Chillhop Records'),
+                concatenated = TRUE)
+
+# Run classifications on data frame
+head(musiclabels)
+example_data = musiclabels[1:1000,]
+example_data$parent = classify_labels(example_data$label, concatenated = TRUE)
+head(example_data, 20)
+
 }

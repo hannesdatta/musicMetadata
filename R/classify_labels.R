@@ -4,7 +4,7 @@
 #####################################################
 
 labels_warner = c('Warner Music' = 'warner[ ]music|warner[ ]records|warner[ ]home|warner[ ]special|warner[ ]strategic|warner[.]esp|Warner[ ][A-Z]',
-                  'Asylum Records' = '^asylum$|asylum[/]|[/]asylum|asylum[ ]records|atlantic[ ]records|atlantic[/]|[/][ ]atlantic([|]|$)|atlantic[ ]nashville|atlantic[ ]recording[ ]corporation|[/]atlantic([|]|$)|elektra asylum|([|]|^)atlantic([|]|$)|elektra[ ]records|[/]elektra|elektra[/]|([|]|^)elektra([|]|$)|warner[ ]music[ ]nashville|warner[ ]bros|elektra[ ]nashville|asylum worldwide|[/][ ]asylum',
+                  'Asylum Records' = '^asylum$|asylum|asylum[ ]records|atlantic[ ]records|atlantic[/]|[/][ ]atlantic([|]|$)|atlantic[ ]nashville|atlantic[ ]recording[ ]corporation|[/]atlantic([|]|$)|elektra asylum|([|]|^)atlantic([|]|$)|elektra[ ]records|[/]elektra|elektra[/]|([|]|^)elektra([|]|$)|warner[ ]music[ ]nashville|warner[ ]bros|elektra[ ]nashville|asylum worldwide|[/][ ]asylum',
                   'Big Beats Records' = 'big[ ]beat[ ]|([|]|^)big beat([|]|$)|[/]big beat|big beat[/]|big beat$',
                   'Canvasback Music' = 'canvasback',
                   'Parlophone Label Group' = 'parlophone|FFR[ ]records|([|]|^)FFRR([|]|$)|emi[ ]classics|[ ]erato[ ]|([|]|^)erato|warner[ ]classics|([|]|^)erato[ ]|[/]erato|erato[/]',
@@ -119,7 +119,7 @@ labels_sony = c('Columbia Records'='CBS[ ]columbia|([|]|^)columbia|hypnotize[ ]m
                 'Sony Masterworks' = 'sony[ ]masterworks|([|]|^)bluebird|rca bluebird$|([|]|^)okeh|portrait[ ]records|([|]|^)portrait|([|]|^)arte[ ]nova|sony[ ]classical|flying[ ]buddha|([|]|^)masterworks',
                 'Provident Label Group' = '([|]|^)provident|essential[ ]records|flicker[ ]records|beach[ ]street|reunion[ ]records|essential[ ]worship',
                 'Century Media Records' = 'century[ ]media|([|]|^)century record|people[ ]like[ ]you|insideout[ ]music|superball[ ]music',
-                'Sony Music Entertainment' = 'Sony[ ]BMG|([|]|^)BMG|columbia[ ]music|sony[ ]music|Columbia[ ]records|^RCA[ ]Records|[ ]rca[ ]records|[/]RCA[ ]records|[/][ ]RCA[ ]records|Sony[ ]Music[ ]Nashville|Zomba[ ]Music[ ]Group|RED[ ]Music[ ]Distribution[ ]|Legacy[ ]Recordings|Sony[ ]Music[ ]Latin|Ariola[ ]Records|Sony[ ]Masterworks|Provident[ ]Label[ ]Group|Century[ ]Media[ ]Records',
+                'Sony Music Entertainment' = 'Sony[ ]BMG|([|]|^)BMG|columbia[ ]music|sony[ ]music|Columbia[ ]records|([|]|^)RCA|^RCA[ ]Records|[ ]rca[ ]records|[/]RCA[ ]records|[/][ ]RCA[ ]records|Sony[ ]Music[ ]Nashville|Zomba[ ]Music[ ]Group|RED[ ]Music[ ]Distribution[ ]|Legacy[ ]Recordings|Sony[ ]Music[ ]Latin|Ariola[ ]Records|Sony[ ]Masterworks|Provident[ ]Label[ ]Group|Century[ ]Media[ ]Records',
                 'sony/ATV music publishing' = 'Sony/ATV|Sony ATV|atv music publishing|sony interactive|sony dadc|Sony Computer Entertainment|Sony Worldwide|sony entertainment|Sony Operating Thailand|2017 sony|sony beat|sony uk|sony urban|sony publishing|sony benelux|sony entertainment|sony digital publishing|^sony[ ][/]',
                 'Filtr' = '([|]|^)Filtr([|]|$)|([|]|^)Filtr Kids',
                 'Ultra records (llc)' = '([|]|^)Ultra Records|([|]|^)"Ultra Records',
@@ -171,21 +171,29 @@ label_iter=list(warner=labels_warner, universal=labels_universal, sony=labels_so
 #'
 #' @export
 classify_labels <- function(labels, concatenated = FALSE) {
+  if (class(labels)=='factor') labels <- as.character(labels)
+
   obj = data.frame(label=labels)
+  splitl = lapply(strsplit(labels,'/'), function(x) trimws(x))
+  splitl2 = data.frame(lbl=unlist(splitl), grp=cumsum(unlist(lapply(splitl, function(x) c(1, rep(0,length(x)-1))))))
 
   for (lbl in names(label_iter)) {
-    obj[, lbl]=as.numeric(0)
-
     searchstring = paste(label_iter[[lbl]], collapse='|')
-    obj[grepl(searchstring, obj$label, ignore.case=TRUE), lbl] <- 1
+
+    splitl2[, lbl] <- 0
+    splitl2[grepl(searchstring, splitl2$lbl, ignore.case=T), lbl] <- 1
 
     # remove bmg[ ]rights from sony classification
     if (lbl=='sony') {
-      obj[grepl(remove_from_sony, obj$label, ignore.case=TRUE), lbl] <- 0
-
+      splitl2[grepl(remove_from_sony, splitl2$lbl, ignore.case=T), lbl] <- 0
     }
 
   }
+
+  # aggregate back to level of labels
+  out=do.call('rbind', lapply(split(splitl2[, names(label_iter)], splitl2$grp), function(x) as.numeric(colSums(x)>0)))
+  colnames(out) <- names(label_iter)
+  obj <- cbind(obj, out)
 
   if (concatenated==F) return(obj)
   apply(obj[,-1], 1, function(x) paste0(colnames(obj)[-1][x==1], collapse=','))

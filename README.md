@@ -31,9 +31,13 @@ This is a basic example which shows you how to solve a common problem:
 ``` r
 library(musicMetadata)
 
+# Classify single labels
 classify_label('Interscope')
 
-## basic example code
+# Classify vector of labels
+labels <- c('300 Entertainment/Atlantic', 'Bad Boy Records', 'Virgin Records Ltd')
+data.frame(label=labels, parent_label = classify_labels(labels, concatenate = T))
+
 ```
 
 ## Acknowledgements

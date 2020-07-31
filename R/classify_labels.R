@@ -47,17 +47,17 @@ labels_warner = c('Warner Music' = 'warner[ ]music|warner[ ]records|warner[ ]hom
                   'napalm records'= 'napalm[ ]records',
                   'saddle creek'= 'saddle[ ]creek')
 
-labels_universal = c('Universal Music Group' = '([|]|^)universal|[/]universal|universal[/]|([|]|^)universal[ ]music[ ]japan|([|]|^)universal[ ]sigma|([|]|^)universal[ ]international|([|]|^)geneon[ ]universal|nbcuniversal|universal[ ]licensing[ ]music|([|]|^)universal[ ]music[ ]|universal[ ]music[ ]spain|universal[ ]m..z.k|([|]|^)universal records|([|]|^)universal[ ]records[ ]|([|]|^)universal[ ]republic[ ]records',
+labels_universal = c('Universal Music Group' = '([|]|^)universal|[/]universal|universal[/]|([|]|^)universal[ ]music[ ]japan|([|]|^)universal[ ]sigma|([|]|^)universal[ ]international|([|]|^)geneon[ ]universal|nbcuniversal|universal[ ]licensing[ ]music|([|]|^)universal[ ]music[ ]|universal[ ]music[ ]spain|universal[ ]m..z.k|([|]|^)universal records|([|]|^)universal[ ]records[ ]|([|]|^)universal[ ]republic[ ]records|^Republic$',
                      'Capitol Music Group' = 'capitol|astralwerks|blue[ ]{0,2}note|deep[ ]{0,2}well|([|]|^)metamorphosis|motown|quality[ ]{0,2}control|([|]|^)virgin[ ]|([|]|^)virgin([|]|$)|[/]virgin|virgin[/]|[/][ ]virgin[ ]',
                      'Decca Classics' = 'decca|ecm([ ]|$|[|])|([|]|^)mercury|([|]|^)mercury[ ]classics|([|]|^)mercury[ ]records|mercury[ ]records',
                      'Def Jam Recordings' = 'def[ ]{0,2}jam|artium|g.o.o.d|([|]|^)good([|]|$)|good[ ]records',
                      'Deutsche Grammophon' = 'deutsche[ ]grammophon|grammophon',
                      'Eagle Rock Entertainment' = 'eagle[ ]rock|^eagle[ ]records|[/]eagle[ ]records|[/][ ]eagle records',
                      'EMI' = '^emi[ ]|[ ]emi[ ]|([|]|^)emi[ ]music|[/]emi|emi[/]|[-]emi|([|]|^)emi([|]|$)|[ ]emi([|]|$)',
-                     'Interscope' = 'interscope|geffen|A[&]M|([|]|^)222([|]|$)|aftermath$|aftermath[/]|aftermath[ ]music|aftermath[ ]records|darkroom|dreamville|LVRN Records|Mad Love|kidinakorner|shady[ ]{0,2}records',
+                     'Interscope' = '^intersc[.]|^intersc$|interscope|geffen|A[&]M|([|]|^)222([|]|$)|aftermath$|aftermath[/]|aftermath[ ]music|aftermath[ ]records|darkroom|dreamville|LVRN Records|Mad Love|kidinakorner|shady[ ]{0,2}records',
                      'Island Records' = '([|]|^)island[ ]mercury|([|]|^)island[ ]def[ ]jam|([|]|^)island[ ]records|4th & Broadway|universal[ ]island|([|]|^)island([|]|$)|[/]island|island[/]',
                      'Polydor Records' = '([|]|^)polydor[ ]|([|]|^)polydor[ ]([|]|$)|([|]|^)fiction[ ]records|([|]|^)fiction([|]|$)|polydor',
-                     'Republic Records' = '^republic[ ]recordings|([|]|^)republic[ ]record|[/]republic|republic[/]|universal[ ]republic|([|]|^)american[ ]recordings|([|]|^)Brushfire[ ]records|casablanca[ ]records|([|]|^)cash[ ]money[ ]records|john[ ]varvatos|([|]|^)lava[ ]records|lightworkers',
+                     'Republic Records' = '^republic$|^republic[ ]recordings|([|]|^)republic[ ]record|[/]republic|republic[/]|universal[ ]republic|([|]|^)american[ ]recordings|([|]|^)Brushfire[ ]records|casablanca[ ]records|([|]|^)cash[ ]money[ ]records|john[ ]varvatos|([|]|^)lava[ ]records|lightworkers',
                      'Republic Records 2' = '([|]|^)republic[ ]records|([|]|^)american[ ]recordings|([|]|^)Brushfire[ ]records|([|]|^)casablanca[ ]records|([|]|^)cash[ ]money[ ]records|john[ ]varvatos|([|]|^)lava[ ]records|lightworkers',
                      'Universal Music Enterprises' = '([|]|^)universal[ ]|([|]|^)universal([|]|$)|T[-]boy',
                      'Universal Music Group Nashville' = 'capitol[ ]{0,1}records[ ]{0,1}nashville|emi[ ]{0,1}records[ ]{0,1}nashville|mca[ ]{0,1}nashville|mercury[ ]{0,1}nashville|show[-]{0,1}dog',
@@ -104,7 +104,10 @@ labels_universal = c('Universal Music Group' = '([|]|^)universal|[/]universal|un
                      'streamline' = 'streamline$|streamline[ ]|streamline[/]',
                      'umg'= '^umg[ ]|[ ]umg[ ]|^umg[/]|[ ]umg[/]|umgi',
                      'downtown'= 'downtown[ ]music|downtown record',
-                     'angel records' = '^angel records$|angel records canada|angel records international')
+                     'angel records' = '^angel records$|angel records canada|angel records international',
+                     'ninetone' = '^ninetone$|^ninetone rec',
+                     'others' = '^Pina Rec|^pina$|^rebell army$|^silent rec',
+                     'disney' = 'disney|walt[ ]disney')
 
 labels_sony = c('Columbia Records'='CBS[ ]columbia|([|]|^)columbia|hypnotize[ ]minds|[/]columbia|[/]columbia[/]|[/][ ]columbia|columbia[/]',
                 'Columbia Records 2' = 'dreamville[ ]entertainment|small.*giant|startime[ ]international|blue[ ]propaganda',
@@ -140,7 +143,8 @@ labels_sony = c('Columbia Records'='CBS[ ]columbia|([|]|^)columbia|hypnotize[ ]m
                 'polo grounds'='polo grounds',
                 'the[ ]orchard'='the[ ]orchard',
                 'sony int' = 'sony international',
-                'freebandz' = '^freebandz|[ ]freebandz[ ]')
+                'freebandz' = '^freebandz|[ ]freebandz[ ]',
+                'others'='^b1$')
 
 # All labels with 'bmg rights' are not from sony, so remove those from the classification
 remove_from_sony = 'BMG[ ]rights'
@@ -151,8 +155,8 @@ label_iter=list(warner=labels_warner, universal=labels_universal, sony=labels_so
 
 #' Classify clear-text label name(s) into their parent (major-label) music labels
 #'
-#' @param labels A vector of clear-text (character) label names
-#' @param concatenated Indicator, whether to return only a character vector with final classification (default is FALSE)
+#' @param labels A vector of clear-text (character) label names (e.g., "Bad Boy Records"), or combination of label names separated by forward slahes (e.g., "Atlantic/Warner Music Nashville")
+#' @param concatenated Indicator, whether to return only a character vector with the final classification (default is FALSE)
 #' @return Either a data frame of the same length as vector and three additional columns (sony, warner, universal), coded as 1 if clear-text label is part of one of the three major music labels, or not (0) (default). If `concatenated=TRUE`,
 #' returns a vector of same length as input vector.
 #'

@@ -167,11 +167,10 @@ label_iter=list(warner=labels_warner, universal=labels_universal, sony=labels_so
 #' classify_labels('Interscope')
 #'
 #' # Classify vector of labels
-#' classify_labels(c('Republic Records', 'Epic/Legacy', 'WM Finland', 'Chillhop Records'))
+#' classify_labels(c('Republic Records', 'Epic/Legacy', 'WM Finland', 'Chillhop Records',  NA, 'Atlantic', ''))
 #'
 #' # Classify vector of labels, return one column as a response (`concatenated = TRUE`)
-#' classify_labels(c('Republic Records', 'Epic/Legacy', 'WM Finland', 'Chillhop Records'),
-#'                 concatenated = TRUE)
+#' classify_labels(c('Republic Records', 'Epic/Legacy', 'WM Finland', 'Chillhop Records', concatenated = TRUE)
 #'
 #'
 #' @export

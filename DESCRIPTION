@@ -1,6 +1,6 @@
 Package: musicMetadata
 Title: Work with metadata frequently encountered in music datasets (e.g., classify clear-text names of music labels into (major-label) parent labels)
-Version: 0.0.1.0000
+Version: 0.0.1.5000
 Date: 2020-07-22
 Authors@R: 
     person(given = "Hannes",

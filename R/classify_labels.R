@@ -179,7 +179,12 @@ classify_labels <- function(labels, concatenated = FALSE) {
 
   obj = data.frame(label=labels)
   splitl = lapply(strsplit(labels,'/'), function(x) trimws(x))
-  splitl2 = data.frame(lbl=unlist(splitl), grp=cumsum(unlist(lapply(splitl, function(x) c(1, rep(0,length(x)-1))))))
+  splitl2 = data.frame(lbl=unlist(splitl), grp=cumsum(unlist(lapply(splitl, function(x) {
+    if (is.null(x)) return(1)
+    c(1, rep(0,length(x)-1))
+    }
+
+    ))))
 
   for (lbl in names(label_iter)) {
     searchstring = paste(label_iter[[lbl]], collapse='|')

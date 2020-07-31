@@ -144,7 +144,8 @@ labels_sony = c('Columbia Records'='CBS[ ]columbia|([|]|^)columbia|hypnotize[ ]m
                 'the[ ]orchard'='the[ ]orchard',
                 'sony int' = 'sony international',
                 'freebandz' = '^freebandz|[ ]freebandz[ ]',
-                'others'='^b1$')
+                'others'='^b1$',
+                'Sony', '^Sony$')
 
 # All labels with 'bmg rights' are not from sony, so remove those from the classification
 remove_from_sony = 'BMG[ ]rights'
@@ -178,8 +179,15 @@ classify_labels <- function(labels, concatenated = FALSE) {
   if (class(labels)=='factor') labels <- as.character(labels)
 
   obj = data.frame(label=labels)
-  splitl = lapply(strsplit(labels,'/'), function(x) trimws(x))
-  splitl2 = data.frame(lbl=unlist(splitl), grp=cumsum(unlist(lapply(splitl, function(x) c(1, rep(0,length(x)-1))))))
+  splitl = lapply(strsplit(labels,'/'), function(x) {
+    if (length(x)==0) return('')
+    trimws(x)
+})
+
+  splitl2 = data.frame(lbl=unlist(splitl), grp=cumsum(unlist(lapply(splitl, function(x) {
+    c(1, rep(0,length(x)-1))
+  }
+    ))))
 
   for (lbl in names(label_iter)) {
     searchstring = paste(label_iter[[lbl]], collapse='|')

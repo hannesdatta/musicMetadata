@@ -13,7 +13,7 @@ labels_warner = c('Warner Music' = 'warner[ ]music|warner[ ]records|warner[ ]hom
                   'Nonesuch Records' = 'nonesuch[ ]records|([|]|^)nonesuch([|]|$)|[/]nonesuch|nonesuch[/]',
                   'Rhino Entertainment' = 'rhino[ ]entertainment|([|]|^)rhino|[/]rhino|rhino[/]',
                   'Roadrunner Records' = '([|]|^)roadrunner|[/]roadrunner|roadrunner[/]',
-                  'Sire Records' = '([|]|^)sire[ ]records|([|]|^)sire[ ]|([|]|^)sire[ ]([|]|$)|[/]sire|sire[/]',
+                  'Sire Records' = '([|]|^)sire[ ]records|([|]|^)sire[ ]|([|]|^)sire[ ]([|]|$)|^sire$',
                   'East West' = 'east[ ]west|eastwest',
                   'Warner (all combined)' = '([|]|^)warner|[(]warner[)]|asylum[ ]records|big[ ]beat[ ]records|canvasback[ ]music|parlophone[ ]label[ ]group|reprise[ ]records|fueled[ ]by[ ]ramen|nonesuch[ ]records|rhino[ ]entertainment|roadrunner[ ]records|sire[ ]records|east[ ]west|[ ]warner[/]',
                   'WM' = '^WM$|^WM[ ]|[/]wm|WM[/]|[/]WMI|[ ]WMI|WMI[ ]',
@@ -49,7 +49,7 @@ labels_warner = c('Warner Music' = 'warner[ ]music|warner[ ]records|warner[ ]hom
 
 labels_universal = c('Universal Music Group' = '([|]|^)universal|[/]universal|universal[/]|([|]|^)universal[ ]music[ ]japan|([|]|^)universal[ ]sigma|([|]|^)universal[ ]international|([|]|^)geneon[ ]universal|nbcuniversal|universal[ ]licensing[ ]music|([|]|^)universal[ ]music[ ]|universal[ ]music[ ]spain|universal[ ]m..z.k|([|]|^)universal records|([|]|^)universal[ ]records[ ]|([|]|^)universal[ ]republic[ ]records|^Republic$',
                      'Capitol Music Group' = 'capitol|astralwerks|blue[ ]{0,2}note|deep[ ]{0,2}well|([|]|^)metamorphosis|motown|quality[ ]{0,2}control|([|]|^)virgin[ ]|([|]|^)virgin([|]|$)|[/]virgin|virgin[/]|[/][ ]virgin[ ]',
-                     'Decca Classics' = 'decca|ecm([ ]|$|[|])|([|]|^)mercury|([|]|^)mercury[ ]classics|([|]|^)mercury[ ]records|mercury[ ]records',
+                     'Decca Classics' = '^decca|^ecm|^mercury|^mercury[ ]classics|^mercury[ ]records|mercury[ ]records',
                      'Def Jam Recordings' = 'def[ ]{0,2}jam|artium|g.o.o.d|([|]|^)good([|]|$)|good[ ]records',
                      'Deutsche Grammophon' = 'deutsche[ ]grammophon|grammophon',
                      'Eagle Rock Entertainment' = 'eagle[ ]rock|^eagle[ ]records|[/]eagle[ ]records|[/][ ]eagle records',
@@ -87,7 +87,7 @@ labels_universal = c('Universal Music Group' = '([|]|^)universal|[/]universal|un
                      'roc nation'= 'roc nation|rocnation',
                      'roc-a-fella' = 'roc-a-fella',
                      'top dawg' = 'top dawg',
-                     'umle' = 'umle',
+                     'umle' = '^umle',
                      'vertigo'= 'vertigo',
                      'caroline' = '[/][ ]caroline[ ][/]|^caroline international|^caroline license|caroline benelux|caroline music|caroline records|caroline[ ]distribution|^caroline$|Caroline Australia|[/]caroline|[(]caroline[])]',
                      'harvest records' = '^harvest record|[/]harvest records',
@@ -145,7 +145,7 @@ labels_sony = c('Columbia Records'='CBS[ ]columbia|([|]|^)columbia|hypnotize[ ]m
                 'sony int' = 'sony international',
                 'freebandz' = '^freebandz|[ ]freebandz[ ]',
                 'others'='^b1$',
-                'Sony', '^Sony$')
+                'Sony' = '^Sony$')
 
 # All labels with 'bmg rights' are not from sony, so remove those from the classification
 remove_from_sony = 'BMG[ ]rights'
@@ -153,6 +153,11 @@ remove_from_sony = 'BMG[ ]rights'
 # Combine lists
 label_iter=list(warner=labels_warner, universal=labels_universal, sony=labels_sony)
 
+#s='itsjorgecm'
+#which(sapply(labels_universal, function(l) grepl(l,s,ignore.case=T))==T)
+#which(sapply(strsplit(labels_universal,'|',fixed=T)[[3]], function(l) grepl(l,s,ignore.case=T))==T)
+
+#grepl(labels_universal[[3]])
 
 #' Classify clear-text label name(s) into their parent (major-label) music labels
 #'

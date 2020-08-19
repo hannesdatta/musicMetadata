@@ -49,7 +49,7 @@ labels_warner = c('Warner Music' = 'warner[ ]music|warner[ ]records|warner[ ]hom
 
 labels_universal = c('Universal Music Group' = '([|]|^)universal|[/]universal|universal[/]|([|]|^)universal[ ]music[ ]japan|([|]|^)universal[ ]sigma|([|]|^)universal[ ]international|([|]|^)geneon[ ]universal|nbcuniversal|universal[ ]licensing[ ]music|([|]|^)universal[ ]music[ ]|universal[ ]music[ ]spain|universal[ ]m..z.k|([|]|^)universal records|([|]|^)universal[ ]records[ ]|([|]|^)universal[ ]republic[ ]records|^Republic$',
                      'Capitol Music Group' = 'capitol|astralwerks|blue[ ]{0,2}note|deep[ ]{0,2}well|([|]|^)metamorphosis|motown|quality[ ]{0,2}control|([|]|^)virgin[ ]|([|]|^)virgin([|]|$)|[/]virgin|virgin[/]|[/][ ]virgin[ ]',
-                     'Decca Classics' = '^decca|^ecm|^mercury|^mercury[ ]classics|^mercury[ ]records|mercury[ ]records',
+                     'Decca Classics' = '^decca$|^decca[ ]|^ecm|^mercury|^mercury[ ]classics|^mercury[ ]records|mercury[ ]records',
                      'Def Jam Recordings' = 'def[ ]{0,2}jam|artium|g.o.o.d|([|]|^)good([|]|$)|good[ ]records',
                      'Deutsche Grammophon' = 'deutsche[ ]grammophon|grammophon',
                      'Eagle Rock Entertainment' = 'eagle[ ]rock|^eagle[ ]records|[/]eagle[ ]records|[/][ ]eagle records',
@@ -62,7 +62,7 @@ labels_universal = c('Universal Music Group' = '([|]|^)universal|[/]universal|un
                      'Universal Music Enterprises' = '([|]|^)universal[ ]|([|]|^)universal([|]|$)|T[-]boy',
                      'Universal Music Group Nashville' = 'capitol[ ]{0,1}records[ ]{0,1}nashville|emi[ ]{0,1}records[ ]{0,1}nashville|mca[ ]{0,1}nashville|mercury[ ]{0,1}nashville|show[-]{0,1}dog',
                      'Universal Music Latin Entertainment' = 'capitol[ ]{0,1}latin|disa[ ]{0,1}records|fonovisa|machete[ ]{0,1}music|universal[ ]{0,1}music[ ]{0,1}latino',
-                     'Verve Label Group' = 'verve|verve[ ]label[ ]group|verve[/]|[/]verve|verve[ ]{0,1}records|decca[ ]{0,1}gold|universal[ ]{0,1}music[ ]{0,1}classics|decca[ ]{0,1}broadway|verve[ ]{0,1}group|([|]|&)verve([|]|$)|verve[ ]{0,1}music[ ]{0,1}group',
+                     'Verve Label Group' = '^verve|^verse[ ]|verve[ ]label[ ]group|verve[/]|[/]verve|verve[ ]{0,1}records|decca[ ]{0,1}gold|universal[ ]{0,1}music[ ]{0,1}classics|decca[ ]{0,1}broadway|verve[ ]{0,1}group|([|]|&)verve([|]|$)|verve[ ]{0,1}music[ ]{0,1}group',
                      'PM:AM Recordings' = 'PM[:]AM|pm[ ]{0,1}am',
                      'Spinefarm Records' = 'spinefarm',
                      'SpinnUp' = 'SpinnUp',
@@ -118,11 +118,11 @@ labels_sony = c('Columbia Records'='CBS[ ]columbia|([|]|^)columbia|hypnotize[ ]m
                 'RED Music Distribution' = '([|]|^)red[ ]music[ ]|odd[ ]future|[ ]red ink|^red[ ]ink|[/]red ink|[/][ ]red ink|cinematic[ ]music|([|]|^)reach[ ]records',
                 'Legacy Recordings' = '([|]|^)legacy[ ]recordings|([|]|^)legacy[ ]records|([|]|^)laface',
                 'Sony Music Latin' = 'sony.*latin',
-                'Ariola Records' = 'ariola',
+                'Ariola Records' = '^ariola',
                 'Sony Masterworks' = 'sony[ ]masterworks|([|]|^)bluebird|rca bluebird$|([|]|^)okeh|portrait[ ]records|([|]|^)portrait|([|]|^)arte[ ]nova|sony[ ]classical|flying[ ]buddha|([|]|^)masterworks',
                 'Provident Label Group' = '([|]|^)provident|essential[ ]records|flicker[ ]records|beach[ ]street|reunion[ ]records|essential[ ]worship',
                 'Century Media Records' = 'century[ ]media|([|]|^)century record|people[ ]like[ ]you|insideout[ ]music|superball[ ]music',
-                'Sony Music Entertainment' = 'Sony[ ]BMG|([|]|^)BMG|columbia[ ]music|sony[ ]music|Columbia[ ]records|([|]|^)RCA|^RCA[ ]Records|[ ]rca[ ]records|[/]RCA[ ]records|[/][ ]RCA[ ]records|Sony[ ]Music[ ]Nashville|Zomba[ ]Music[ ]Group|RED[ ]Music[ ]Distribution[ ]|Legacy[ ]Recordings|Sony[ ]Music[ ]Latin|Ariola[ ]Records|Sony[ ]Masterworks|Provident[ ]Label[ ]Group|Century[ ]Media[ ]Records',
+                'Sony Music Entertainment' = 'Sony[ ]BMG|([|]|^)BMG|columbia[ ]music|sony[ ]music|Columbia[ ]records|([|]|^)RCA$|^RCA[ ]|^RCA[ ]Records|[ ]rca[ ]records|[/]RCA[ ]records|[/][ ]RCA[ ]records|Sony[ ]Music[ ]Nashville|Zomba[ ]Music[ ]Group|RED[ ]Music[ ]Distribution[ ]|Legacy[ ]Recordings|Sony[ ]Music[ ]Latin|Ariola[ ]Records|Sony[ ]Masterworks|Provident[ ]Label[ ]Group|Century[ ]Media[ ]Records',
                 'sony/ATV music publishing' = 'Sony/ATV|Sony ATV|atv music publishing|sony interactive|sony dadc|Sony Computer Entertainment|Sony Worldwide|sony entertainment|Sony Operating Thailand|2017 sony|sony beat|sony uk|sony urban|sony publishing|sony benelux|sony entertainment|sony digital publishing|^sony[ ][/]',
                 'Filtr' = '([|]|^)Filtr([|]|$)|([|]|^)Filtr Kids',
                 'Ultra records (llc)' = '([|]|^)Ultra Records|([|]|^)"Ultra Records',
@@ -153,7 +153,7 @@ remove_from_sony = 'BMG[ ]rights'
 # Combine lists
 label_iter=list(warner=labels_warner, universal=labels_universal, sony=labels_sony)
 
-#s='itsjorgecm'
+#s='Ethan Chumley'
 #which(sapply(labels_universal, function(l) grepl(l,s,ignore.case=T))==T)
 #which(sapply(strsplit(labels_universal,'|',fixed=T)[[3]], function(l) grepl(l,s,ignore.case=T))==T)
 

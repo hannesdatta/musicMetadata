@@ -163,6 +163,7 @@ label_iter=list(warner=labels_warner, universal=labels_universal, sony=labels_so
 #'
 #' @param labels A vector of clear-text (character) label names (e.g., "Bad Boy Records"), or combination of label names separated by forward slahes (e.g., "Atlantic/Warner Music Nashville")
 #' @param concatenated Indicator, whether to return only a character vector with the final classification (default is FALSE)
+#' @param split_slash Indicator, whether vector of label names (e.g., "Label A/WM Music") should be split into two separate labels ("Label A", "WM Music") before processing (default is TRUE)
 #' @return Either a data frame of the same length as vector and three additional columns (sony, warner, universal), coded as 1 if clear-text label is part of one of the three major music labels, or not (0) (default). If `concatenated=TRUE`,
 #' returns a vector of same length as input vector.
 #'
@@ -175,22 +176,27 @@ label_iter=list(warner=labels_warner, universal=labels_universal, sony=labels_so
 #' classify_labels(c('Republic Records', 'Epic/Legacy', 'WM Finland', 'Chillhop Records',  NA, 'Atlantic', ''))
 #'
 #' # Classify vector of labels, return one column as a response (`concatenated = TRUE`)
-#' classify_labels(c('Republic Records', 'Epic/Legacy', 'WM Finland', 'Chillhop Records', concatenated = TRUE)
+#' classify_labels(c('Republic Records', 'Epic/Legacy', 'WM Finland', 'Chillhop Records'), concatenated = TRUE)
 #'
 #'
 #' @export
-classify_labels <- function(labels, concatenated = FALSE) {
+classify_labels <- function(labels, concatenated = FALSE, split_slash = T) {
   if (class(labels)=='factor') labels <- as.character(labels)
 
   obj = data.frame(label=labels)
-  splitl = lapply(strsplit(labels,'/'), function(x) {
-    if (length(x)==0) return('')
-    trimws(x)
-  })
 
-  splitl2 = data.frame(lbl=unlist(splitl), grp=cumsum(unlist(lapply(splitl, function(x) {
-    c(1, rep(0,length(x)-1))
-  }))))
+  if (split_slash == T) {
+    splitl = lapply(strsplit(labels,'/'), function(x) {
+      if (length(x)==0) return('')
+      trimws(x)
+    })
+
+    splitl2 = data.frame(lbl=unlist(splitl), grp=cumsum(unlist(lapply(splitl, function(x) {
+      c(1, rep(0,length(x)-1))
+    }))))
+  } else {
+  splitl2 = data.frame(lbl=labels, grp=seq(from=1, to=length(labels)))
+  }
 
   for (lbl in names(label_iter)) {
     searchstring = paste(label_iter[[lbl]], collapse='|')
